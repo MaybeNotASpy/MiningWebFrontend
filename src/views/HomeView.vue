@@ -12,14 +12,17 @@
     </p>
   </section>
 </template>
+
 <script>
+// @ is an alias to /src
 
 export default {
-  name: 'Home',
-  computed : {
-    isLoggedIn: function() {
-      return this.$store.getters.isAuthenticated;
+  name: 'HomeView',
+  setup () {
+    const isLoggedIn = () => this.$store.getters.isAuthenticated
+    return {
+      isLoggedIn
     }
-  },
+  }
 }
 </script>

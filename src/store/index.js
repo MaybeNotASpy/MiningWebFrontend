@@ -1,17 +1,13 @@
-import createPersistedState from "vuex-persistedstate";
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createStore } from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
-import notes from './modules/images';
-import users from './modules/users';
+import images from './modules/images'
+import users from './modules/users'
 
-
-Vue.use(Vuex);
-
-export default new Vuex.Store({
+export default createStore({
   modules: {
     images,
-    users,
+    users
   },
   plugins: [createPersistedState()]
-});
+})

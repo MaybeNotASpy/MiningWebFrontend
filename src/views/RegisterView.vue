@@ -19,28 +19,28 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 export default {
-  name: 'Register',
-  data() {
-    return {
-      user: {
-        username: '',
-        full_name: '',
-        password: '',
-      },
-    };
-  },
-  methods: {
-    ...mapActions(['register']),
-    async submit() {
+  setup () {
+    const user = {
+      username: '',
+      full_name: '',
+      password: ''
+    }
+
+    const submit = async () => {
       try {
-        await this.register(this.user);
-        this.$router.push('/dashboard');
+        await this.$store.dispatch('register', this.user)
+        console.log('test')
+        this.$router.push('/dashboard')
       } catch (error) {
-        throw 'Username already exists. Please try again.';
+        throw new Error('Username already exists. Please try again.')
       }
-    },
-  },
-};
+    }
+
+    return {
+      user,
+      submit
+    }
+  }
+}
 </script>

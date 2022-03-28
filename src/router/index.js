@@ -1,81 +1,67 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '../store';
-import Home from '../views/Home.vue'
-import Dashboard from '../views/Dashboard.vue';
-import Login from '../views/Login.vue'
-import Image from '../views/Image.vue';
-import EditImage from '../views/EditImage.vue'
-import Profile from '../views/Profile.vue';
-import Register from '../views/Register.vue'
+import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/LoginView.vue'
+import RegisterView from '../views/RegisterView.vue'
+import DashboardView from '../views/DashboardView.vue'
+import ProfileView from '../views/ProfileView.vue'
+import ImageView from '../views/ImageView.vue'
+import EditImageView from '../views/EditImageView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
-    meta: {requiresAuth: true},
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile,
-    meta: {requiresAuth: true},
-  },
-  {
-    path: '/image/:id',
-    name: 'Image',
-    component: Image,
-    meta: {requiresAuth: true},
-    props: true,
-  },
-  {
-    path: '/image/:id',
-    name: 'EditImage',
-    component: EditImage,
-    meta: {requiresAuth: true},
-    props: true,
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
+    component: HomeView
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register,
+    component: RegisterView
   },
-  
-  //{
- //   path: '/about',
- //   name: 'about',
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: DashboardView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/image/:id',
+    name: 'Image',
+    component: ImageView,
+    meta: { requiresAuth: true },
+    props: true
+  },
+  {
+    path: '/editimage/:id',
+    name: 'EditImage',
+    component: EditImageView,
+    meta: { requiresAuth: true },
+    props: true
+  },
+  {
+    path: '/about',
+    name: 'about',
     // route level code-splitting
-  //  // this generates a separate chunk (about.[hash].js) for this route
+    // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-  //  component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  //}
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
-});
+  routes
+})
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isAuthenticated) {
-      next();
-      return;
-    }
-    next('/login');
-  } else {
-    next();
-  }
-});
-
-export default router;
+export default router

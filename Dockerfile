@@ -6,8 +6,9 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 RUN npm install @vue/cli -g
 
-COPY package.json package-lock.json jsconfig.json vue.config.js babel.config.js ./
-COPY public /app/public
+COPY --chown=node:node package.json package-lock.json jsconfig.json vue.config.js babel.config.js ./
+COPY --chown=node:node public /app/public
 RUN npm install
+USER node
 
 CMD ["npm", "run", "serve"]

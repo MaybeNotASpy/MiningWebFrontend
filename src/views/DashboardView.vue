@@ -50,28 +50,28 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'Dashboard',
-  data() {
+  name: 'Dashboard-View',
+  data () {
     return {
       form: {
         title: '',
-        content: '',
-      },
-    };
+        content: ''
+      }
+    }
   },
-  created: function() {
-    return this.$store.dispatch('getImages');
+  created: function () {
+    return this.$store.dispatch('getImages')
   },
   computed: {
-    ...mapGetters({ images: 'stateImages'}),
+    ...mapGetters({ images: 'stateImages' })
   },
   methods: {
     ...mapActions(['createImage']),
-    async submit() {
-      await this.createImage(this.form);
-    },
-  },
-};
+    async submit () {
+      await this.createImage(this.form)
+    }
+  }
+}
 </script>

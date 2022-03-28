@@ -22,48 +22,48 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'EditImage',
   props: ['id'],
-  data() {
+  data () {
     return {
       form: {
         title: '',
-        content: '',
-      },
-    };
-  },
-  created: function() {
-    this.GetImage();
-  },
-  computed: {
-    ...mapGetters({ image: 'stateNImage' }),
-  },
-  methods: {
-    ...mapActions(['updateImage', 'viewImage']),
-    async submit() {
-    try {
-      let image = {
-        id: this.id,
-        form: this.form,
-      };
-      await this.updateImage(image);
-      this.$router.push({name: 'Image', params:{id: this.image.id}});
-    } catch (error) {
-      console.log(error);
-    }
-    },
-    async GetImage() {
-      try {
-        await this.viewImage(this.id);
-        this.form.title = this.image.title;
-        this.form.content = this.image.content;
-      } catch (error) {
-        console.error(error);
-        this.$router.push('/dashboard');
+        content: ''
       }
     }
   },
-};
+  created: function () {
+    this.GetImage()
+  },
+  computed: {
+    ...mapGetters({ image: 'stateNImage' })
+  },
+  methods: {
+    ...mapActions(['updateImage', 'viewImage']),
+    async submit () {
+      try {
+        const image = {
+          id: this.id,
+          form: this.form
+        }
+        await this.updateImage(image)
+        this.$router.push({ name: 'Image', params: { id: this.image.id } })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async GetImage () {
+      try {
+        await this.viewImage(this.id)
+        this.form.title = this.image.title
+        this.form.content = this.image.content
+      } catch (error) {
+        console.error(error)
+        this.$router.push('/dashboard')
+      }
+    }
+  }
+}
 </script>

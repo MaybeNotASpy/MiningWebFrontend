@@ -11,26 +11,26 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'Profile',
-  created: function() {
-    return this.$store.dispatch('viewMe');
+  name: 'Profile-View',
+  created: function () {
+    return this.$store.dispatch('viewMe')
   },
   computed: {
-    ...mapGetters({user: 'stateUser' }),
+    ...mapGetters({ user: 'stateUser' })
   },
   methods: {
     ...mapActions(['deleteUser']),
-    async deleteAccount() {
+    async deleteAccount () {
       try {
-        await this.deleteUser(this.user.id);
-        await this.$store.dispatch('logOut');
-        this.$router.push('/');
+        await this.deleteUser(this.user.id)
+        await this.$store.dispatch('logOut')
+        this.$router.push('/')
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     }
-  },
+  }
 }
 </script>

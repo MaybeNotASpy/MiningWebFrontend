@@ -15,25 +15,26 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { useStore } from 'vuex'
 export default {
-  name: 'Login',
-  data() {
+  setup () {
+    const store = useStore()
+    const form = {
+      username: '',
+      password: ''
+    }
+    async function submit () {
+      const User = new FormData()
+      User.append('username', this.form.username)
+      User.append('password', this.form.password)
+      await store.dispatch('users/logIn', User)
+      console.log('test')
+      this.$router.push('/dashboard')
+    }
+
     return {
-      form: {
-        username: '',
-        password:'',
-      }
-    };
-  },
-  methods: {
-    ...mapActions(['logIn']),
-    async submit() {
-      const User = new FormData();
-      User.append('username', this.form.username);
-      User.append('password', this.form.password);
-      await this.logIn(User);
-      this.$router.push('/dashboard');
+      form,
+      submit
     }
   }
 }

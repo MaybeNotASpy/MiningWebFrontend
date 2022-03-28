@@ -6,6 +6,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul v-if="isLoggedIn" class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
@@ -33,25 +34,28 @@
             </li>
           </ul>
         </div>
+
       </div>
     </nav>
   </header>
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 export default {
-  name: 'NavBar',
-  computed: {
-    isLoggedIn: function() {
-      return this.$store.getters.isAuthenticated;
+  setup () {
+    const store = useStore()
+    console.log('hello')
+    const logout = async () => {
+      await store.dispatch('logOut')
+      this.$router.push('/login')
     }
-  },
-  methods: {
-    async logout () {
-      await this.$store.dispatch('logOut');
-      this.$router.push('/login');
+    return {
+      isLoggedIn: computed(() => store.getters.isAuthenticated),
+      logout
     }
-  },
+  }
 }
 </script>
 

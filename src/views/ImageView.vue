@@ -11,33 +11,32 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'Image',
+  name: 'Image-View',
   props: ['id'],
-  async created() {
+  async created () {
     try {
-      await this.viewImage(this.id);
+      await this.viewImage(this.id)
     } catch (error) {
-      console.error(error);
-      this.$router.push('/dashboard');
+      console.error(error)
+      this.$router.push('/dashboard')
     }
   },
   computed: {
-    ...mapGetters({ image: 'stateImage', user: 'stateUser'}),
+    ...mapGetters({ image: 'stateImage', user: 'stateUser' })
   },
   methods: {
     ...mapActions(['viewImage', 'deleteImage']),
-    async removeImage() {
+    async removeImage () {
       try {
-        await this.deleteImage(this.id);
-        this.$router.push('/dashboard');
+        await this.deleteImage(this.id)
+        this.$router.push('/dashboard')
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     }
-  },
-};
+  }
+}
 </script>
