@@ -43,16 +43,19 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
   setup () {
     const store = useStore()
-    console.log('hello')
-    const logout = async () => {
-      await store.dispatch('logOut')
-      this.$router.push('/login')
+    const router = useRouter()
+
+    async function logout () {
+      await store.dispatch('users/logOut')
+      router.push('/login')
     }
+
     return {
-      isLoggedIn: computed(() => store.getters.isAuthenticated),
+      isLoggedIn: computed(() => store.getters['users/isAuthenticated']),
       logout
     }
   }

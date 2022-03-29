@@ -27,7 +27,7 @@
       <h1>Images</h1>
       <hr/><br/>
 
-      <div v-if="images.length">
+      <div v-if="images?.length">
         <div v-for="image in images" :key="image.id" class="images">
           <div class="card" style="width: 18rem;">
             <div class="card-body">
@@ -50,27 +50,27 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 export default {
-  name: 'Dashboard-View',
-  data () {
-    return {
-      form: {
-        title: '',
-        content: ''
-      }
+  setup () {
+    const store = useStore()
+
+    const form = {
+      title: '',
+      content: ''
     }
-  },
-  created: function () {
-    return this.$store.dispatch('getImages')
-  },
-  computed: {
-    ...mapGetters({ images: 'stateImages' })
-  },
-  methods: {
-    ...mapActions(['createImage']),
-    async submit () {
+
+    async function submit () {
       await this.createImage(this.form)
+    }
+
+    return {
+      form,
+      created: () => store.dispatch('images/getImages'),
+      createImage: (image) => store.dispatch('images/createImage', image),
+      images: computed(() => store.getters['images/stateImages']),
+      submit
     }
   }
 }

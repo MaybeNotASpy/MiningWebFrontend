@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const state = {
-  notes: null,
-  note: null
+  images: null,
+  image: null
 }
 
 const getters = {
@@ -43,6 +43,7 @@ const mutations = {
 }
 
 export default {
+  namespaced: true,
   state,
   getters,
   actions,

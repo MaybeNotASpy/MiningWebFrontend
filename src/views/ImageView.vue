@@ -12,31 +12,41 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
-  name: 'Image-View',
-  props: ['id'],
-  async created () {
-    try {
-      await this.viewImage(this.id)
-    } catch (error) {
-      console.error(error)
-      this.$router.push('/dashboard')
+  setup () {
+    const router = useRouter()
+    const store = useStore()
+
+    async function created () {
+      try {
+        await this.viewImage(this.id)
+      } catch (error) {
+        console.error(error)
+        router.push('/dashboard')
+      }
     }
-  },
-  computed: {
-    ...mapGetters({ image: 'stateImage', user: 'stateUser' })
-  },
-  methods: {
-    ...mapActions(['viewImage', 'deleteImage']),
-    async removeImage () {
+
+    async function removeImage () {
       try {
         await this.deleteImage(this.id)
-        this.$router.push('/dashboard')
+        router.push('/dashboard')
       } catch (error) {
         console.error(error)
       }
     }
+
+    return {
+      created,
+      removeImage,
+      image: computed(() => store.getters['images/stateImage']),
+      user: computed(() => store.getters['images/stateUser']),
+      viewImage: (imageId) => store.dispatch('image/viewImage', imageId),
+      deleteImage: (imageId) => store.dispath('image/deleteImage', imageId)
+    }
   }
+  // props: ['id'],
 }
 </script>

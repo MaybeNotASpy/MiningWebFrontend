@@ -11,25 +11,30 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
 export default {
-  name: 'Profile-View',
-  created: function () {
-    return this.$store.dispatch('viewMe')
-  },
-  computed: {
-    ...mapGetters({ user: 'stateUser' })
-  },
-  methods: {
-    ...mapActions(['deleteUser']),
-    async deleteAccount () {
+  setup () {
+    const store = useStore()
+    const router = useRouter()
+
+    async function deleteAccount () {
       try {
         await this.deleteUser(this.user.id)
-        await this.$store.dispatch('logOut')
-        this.$router.push('/')
+        await store.dispatch('users/logOut')
+        router.push('/')
       } catch (error) {
         console.error(error)
       }
+    }
+
+    return {
+      created: () => store.dispatch('users/viewMe'),
+      deleteUser: () => store.dispatch('users/deleteUser'),
+      user: computed(() => store.getters['users/stateUser']),
+      deleteAccount
     }
   }
 }
