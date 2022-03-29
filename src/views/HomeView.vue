@@ -15,11 +15,12 @@
 
 <script>
 // @ is an alias to /src
-
+import { useStore } from 'vuex'
 export default {
   name: 'HomeView',
   setup () {
-    const isLoggedIn = () => this.$store.getters.isAuthenticated
+    const store = useStore()
+    const isLoggedIn = () => store.getters.isAuthenticated
     return {
       isLoggedIn
     }

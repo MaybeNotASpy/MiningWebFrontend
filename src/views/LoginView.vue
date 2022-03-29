@@ -16,6 +16,7 @@
 
 <script>
 import { useStore } from 'vuex'
+import router from '../router'
 export default {
   setup () {
     const store = useStore()
@@ -29,7 +30,7 @@ export default {
       User.append('password', this.form.password)
       await store.dispatch('users/logIn', User)
       console.log('test')
-      this.$router.push('/dashboard')
+      router.push('/dashboard')
     }
 
     return {

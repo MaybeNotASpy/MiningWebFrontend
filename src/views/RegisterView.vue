@@ -19,20 +19,24 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import router from '../router'
 export default {
   setup () {
+    const store = useStore()
+
     const user = {
       username: '',
       full_name: '',
       password: ''
     }
 
-    const submit = async () => {
+    async function submit () {
       try {
-        await this.$store.dispatch('register', this.user)
-        console.log('test')
-        this.$router.push('/dashboard')
+        await store.dispatch('users/register', this.user)
+        router.push('/dashboard')
       } catch (error) {
+        console.log(error)
         throw new Error('Username already exists. Please try again.')
       }
     }
