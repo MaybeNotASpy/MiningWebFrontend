@@ -2,23 +2,11 @@
   <div>
     <section>
       <h1>Add new image</h1>
+      <upload-media 
+        server="/image"
+        error="@error('media'){{$message}}@enderror">
+      </upload-media>
       <hr/><br/>
-
-      <form @submit.prevent="submit">
-        <div class="mb-3">
-          <label for="title" class="form-label">Title:</label>
-          <input type="text" name="title" v-model="form.title" class="form-control" />
-        </div>
-        <div class="mb-3">
-          <label for="content" class="form-label">Content:</label>
-          <textarea
-            name="content"
-            v-model="form.content"
-            class="form-control"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
     </section>
 
     <br/><br/>
@@ -45,6 +33,7 @@
       <div v-else>
         <p>Nothing to see. Check back later.</p>
       </div>
+      
     </section>
   </div>
 </template>
@@ -56,21 +45,9 @@ export default {
   setup () {
     const store = useStore()
 
-    const form = {
-      title: '',
-      content: ''
-    }
-
-    async function submit () {
-      await this.createImage(this.form)
-    }
-
     return {
-      form,
       created: () => store.dispatch('images/getImages'),
-      createImage: (image) => store.dispatch('images/createImage', image),
-      images: computed(() => store.getters['images/stateImages']),
-      submit
+      images: computed(() => store.getters['images/stateImages'])
     }
   }
 }

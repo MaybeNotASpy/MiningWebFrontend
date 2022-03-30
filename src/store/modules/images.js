@@ -11,9 +11,18 @@ const getters = {
 }
 
 const actions = {
-  async createImage ({ dispatch }, image) {
-    await axios.post('images', image)
+  async createImage ({ dispatch }, image, onUploadProgress) {
+    let formData = new FormData()
+    formData.append('file', image)
+
+    let response = await axios.post('images', formdata, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
+      onUploadProgress
+    })
     await dispatch('getImages')
+    return response
   },
   async getImages ({ commit }) {
     const { data } = await axios.get('images')
