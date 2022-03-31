@@ -15,12 +15,13 @@
 
 <script>
 import { useStore } from 'vuex'
+import { computed } from 'vue'
 export default {
   name: 'HomeView',
   setup () {
     const store = useStore()
     return {
-      isLoggedIn: computed(() => store.getters['users/isAuthenticated']),
+      isLoggedIn: computed(() => store.getters['users/isAuthenticated'])
     }
   }
 }

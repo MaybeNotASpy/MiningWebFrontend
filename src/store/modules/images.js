@@ -12,12 +12,12 @@ const getters = {
 
 const actions = {
   async createImage ({ dispatch }, image, onUploadProgress) {
-    let formData = new FormData()
+    const formData = new FormData()
     formData.append('file', image)
 
-    let response = await axios.post('images', formdata, {
+    const response = await axios.post('images', formData, {
       headers: {
-        "Content-Type": "multipart/form-data"
+        'Content-Type': 'multipart/form-data'
       },
       onUploadProgress
     })

@@ -4,18 +4,15 @@
     <div class="main container">
       <router-view/>
     </div>
-    <upload-image></upload-image>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import NavBar from '@/components/NavBar.vue'
-import UploadImage from '@/components/UploadImage.vue'
 export default {
   components: {
-    NavBar,
-    UploadImage
+    NavBar
   }
 }
 </script>
